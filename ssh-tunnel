@@ -1,0 +1,56 @@
+#!/bin/bash
+
+alias='rizal72'
+f=''
+mode=0
+
+function help {
+    echo "ssh-tunnel - tunnel port 22 from serveo.net for remote access:"
+    echo "uses autossh,ssh -R option and serveo.net online service."
+    echo "Usage: ssh-tunnel -s/-g [-b]"
+	echo
+    echo "Modes:"
+    echo "-s    	[s]tandard port 22 SSH tunnel, with alias: rizal72"
+    echo "-g		[g]eneric TCP tunnel, use port 1972"
+	echo
+    echo "Available options:"
+    echo "-a=ALIAS	set a custom [a]lias "
+    echo "-f		execute in background"
+    echo "-h		prints this help"
+    echo
+}
+
+while getopts 'sa:gfh' opt; do
+  case "$opt" in
+    s) mode=1
+    ;;
+    a) arg="$OPTARG"
+      if [[ $arg != "" ]]; then
+      	alias=$arg
+      fi
+    ;;
+    g) mode=2
+    ;;
+    f) f='-f'
+    ;;
+    ?|h) help && exit 1
+    ;;
+  esac
+done
+shift "$(($OPTIND -1))"
+
+if [[ $mode == 0 ]]; then
+	echo "mode not set - please use -s or -g"
+	echo
+	help && exit 1
+elif [[ $mode == 1 ]]; then
+	echo "tunneling port 22 to serveo.net, with alias "$alias
+	echo "To connect use: ssh -J serveo.net riccardosallusti@"$alias
+	echo "if option -f is used, you can kill the process with: pkill autossh"
+	autossh $f -M 0 -R $alias:22:localhost:22 serveo.net
+elif [[ $mode == 2 ]]; then
+	echo "tunneling port 22 to serveo.net:1972"
+	echo "To connect use: ssh -p 1972 riccardosallusti@serveo.net"
+	echo "if option -f is used, you can this process it with: pkill autossh"
+	autossh $f -M 0 -R 1972:localhost:22 serveo.net
+fi
