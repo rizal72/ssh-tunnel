@@ -1,19 +1,26 @@
 #!/bin/bash
 
+# Console colors
+D='\033[0m'  # default
+R='\033[0;31m'  # red
+G='\033[0;32m'  # green
+Y='\033[0;33m'  # yellow
+B='\033[0;4m'  # blue
+
 alias='rizal72'
 f=''
 mode=0
 
 function help {
-    echo "ssh-tunnel - tunnel port 22 from serveo.net for remote access:"
-    echo "uses autossh,ssh -R option and serveo.net online service."
-    echo "Usage: ssh-tunnel -s/-g [-b]"
+    echo -e "${G}ssh-tunnel${D} - tunnel port 22 from serveo.net for remote access:"
+    echo -e "uses autossh,ssh -R option and serveo.net online service."
+    echo -e "${B}Usage:${D} ssh-tunnel -s/-g [-b]"
 	echo
-    echo "Modes:"
-    echo "-s    	[s]tandard port 22 SSH tunnel, with alias: rizal72"
+    echo -e $G"Modes:"$D
+    echo "-s 		[s]tandard port 22 SSH tunnel, with alias: rizal72"
     echo "-g		[g]eneric TCP tunnel, use port 1972"
 	echo
-    echo "Available options:"
+    echo -e $G"Available options:"$D
     echo "-a=ALIAS	set a custom [a]lias "
     echo "-f		execute in background"
     echo "-h		prints this help"
@@ -40,17 +47,17 @@ done
 shift "$(($OPTIND -1))"
 
 if [[ $mode == 0 ]]; then
-	echo "mode not set - please use -s or -g"
+	echo -e $R"mode not set - please use -s or -g"$D
 	echo
 	help && exit 1
 elif [[ $mode == 1 ]]; then
-	echo "tunneling port 22 to serveo.net, with alias "$alias
-	echo "To connect use: ssh -J serveo.net riccardosallusti@"$alias
-	echo "if option -f is used, you can kill the process with: pkill autossh"
+	echo -e "tunneling port ${G}22${D} to serveo.net, with alias "$G$alias$D
+	echo -e "To connect use: ${G}ssh -J serveo.net riccardosallusti@"$alias$D
+	echo -e "if option ${B}-f${D} is used, you can kill the process with: ${G}pkill autossh${D}"
 	autossh $f -M 0 -R $alias:22:localhost:22 serveo.net
 elif [[ $mode == 2 ]]; then
-	echo "tunneling port 22 to serveo.net:1972"
-	echo "To connect use: ssh -p 1972 riccardosallusti@serveo.net"
-	echo "if option -f is used, you can this process it with: pkill autossh"
+	echo -e "tunneling port ${G}22${D} to serveo.net:1972"
+	echo -e "To connect use: ${G}ssh -p 1972 riccardosallusti@serveo.net${D}"
+	echo -e "if option ${B}-f${D} is used, you can this process it with:  ${G}pkill autossh${D}"
 	autossh $f -M 0 -R 1972:localhost:22 serveo.net
 fi
