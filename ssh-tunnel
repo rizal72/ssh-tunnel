@@ -12,29 +12,26 @@ f=''
 mode=0
 
 function help {
-    echo -e "${G}ssh-tunnel${D} - tunnel port 22 from serveo.net for remote access:"
-    echo -e "uses autossh, ssh -R option and serveo.net online service."
-    echo -e "${B}Usage:${D} ssh-tunnel -s/-g [-b]"
-	echo
-    echo -e $G"Modes:"$D
-    echo "-s 		[s]tandard port 22 SSH tunnel, with alias: rizal72"
-    echo "-g		[g]eneric TCP tunnel, use port 1972"
-	echo
-    echo -e $G"Available options:"$D
-    echo "-a=ALIAS	set a custom [a]lias "
-    echo "-f		execute in background"
-    echo "-h		prints this help"
-    echo
+  echo -e "${G}ssh-tunnel${D} - Forward port 22 from serveo.net for remote access:"
+  echo -e "uses autossh, ssh -R option and serveo.net online service."
+  echo -e "${B}Usage:${D} ssh-tunnel -s/-g [-b]"
+  echo
+  echo -e $G"Modes:"$D
+  echo -e "-s         [s]tandard port 22 SSH tunnel, with alias: rizal72"
+  echo -e "-g         [g]eneric TCP tunnel, uses port 1972"
+  echo
+  echo -e $G"Available options:"$D
+  echo -e "-a=ALIAS   set a custom [a]lias "
+  echo -e "-f         execute in background"
+  echo -e "-h         prints this help"
+  echo
 }
 
 while getopts 'sa:gfh' opt; do
   case "$opt" in
     s) mode=1
     ;;
-    a) arg="$OPTARG"
-      if [[ $arg != "" ]]; then
-      	alias=$arg
-      fi
+    a) alias="$OPTARG"
     ;;
     g) mode=2
     ;;
@@ -47,17 +44,12 @@ done
 shift "$(($OPTIND -1))"
 
 if [[ $mode == 0 ]]; then
-	echo -e $R"mode not set - please use -s or -g"$D
-	echo
+	echo -e "${R}mode not set${D} - please specify ${G}-s${D} or ${G}-g${D} argument\n"
 	help && exit 1
 elif [[ $mode == 1 ]]; then
-	echo -e "tunneling port ${G}22${D} to serveo.net, with alias "$G$alias$D
-	echo -e "To connect use: ${G}ssh -J serveo.net riccardosallusti@"$alias$D
-	echo -e "if option ${B}-f${D} is used, you can kill the process with: ${G}pkill autossh${D}"
+	echo -e "Forwarding port ${G}22${D} from serveo.net, with alias ${G}$alias${D}\nTo connect use: ${B}ssh -J serveo.net riccardosallusti@$alias$D\nif option ${B}-f${D} is used, you can kill the process with: ${G}pkill autossh${D}"
 	autossh $f -M 0 -R $alias:22:localhost:22 serveo.net
 elif [[ $mode == 2 ]]; then
-	echo -e "tunneling port ${G}22${D} to serveo.net:1972"
-	echo -e "To connect use: ${G}ssh -p 1972 riccardosallusti@serveo.net${D}"
-	echo -e "if option ${B}-f${D} is used, you can this process it with:  ${G}pkill autossh${D}"
+	echo -e "Forwarding port ${G}22${D} from serveo.net:1972\nTo connect use: ${B}ssh -p 1972 riccardosallusti@serveo.net${D}\nif option ${B}-f${D} is used, you can this process it with: ${G}pkill autossh${D}"
 	autossh $f -M 0 -R 1972:localhost:22 serveo.net
 fi
