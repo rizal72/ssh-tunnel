@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+	<dict>
+		<key>EnvironmentVariables</key>
+			<dict>
+				<key>PATH</key>
+				<string>/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:</string>
+			</dict>
+		<key>Label</key>
+		<string>it.riccardosallusti.ssh-tunnel</string>
+		<key>ProgramArguments</key>
+		<array>
+			<string>/Users/riccardosallusti/Documents/GitHub/ssh-tunnel/ssh-tunnel</string>
+			<string>-s</string>
+			<!-- <string>-f</string> -->
+		</array>
+		<key>RunAtLoad</key>
+		<true/>
+		<key>StandardOutPath</key>
+		<string>/tmp/ssh-tunnel.stdout</string>
+		<key>StandardErrorPath</key>
+		<string>/tmp/ssh-tunnel.stderr</string>
+	</dict>
+</plist>

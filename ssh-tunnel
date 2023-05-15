@@ -48,8 +48,8 @@ if [[ $mode == 0 ]]; then
 	help && exit 1
 elif [[ $mode == 1 ]]; then
 	echo -e "Forwarding port ${G}22${D} from serveo.net, with alias ${G}$alias${D}\nTo connect use: ${B}ssh -J serveo.net riccardosallusti@$alias$D\nif option ${B}-f${D} is used, you can kill the process with: ${G}pkill autossh${D}"
-	autossh $f -M 0 -o "ServerAliveInterval 30" -o "ServerAliveCountMax 3" -R $alias:22:localhost:22 serveo.net
+	/usr/local/bin/autossh $f -M 0 -o "ServerAliveInterval 30" -o "ServerAliveCountMax 3" -R $alias:22:localhost:22 serveo.net
 elif [[ $mode == 2 ]]; then
 	echo -e "Forwarding port ${G}22${D} from serveo.net:1972\nTo connect use: ${B}ssh -p 1972 riccardosallusti@serveo.net${D}\nif option ${B}-f${D} is used, you can this process it with: ${G}pkill autossh${D}"
-	autossh $f -M 0 -o "ServerAliveInterval 30" -o "ServerAliveCountMax 3" -R 1972:localhost:22 serveo.net
+	/usr/local/bin/autossh $f -M 0 -o "ServerAliveInterval 30" -o "ServerAliveCountMax 3" -R 1972:localhost:22 serveo.net
 fi
