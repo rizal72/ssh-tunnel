@@ -8,8 +8,10 @@ _Usage:_ ssh-tunnel -s/-g/-c [-b].
 -g    [g]eneric TCP tunnel, use port 1972.  
 -c    [c]custom domain to forward to. Default: 'ssh.riccardosallusti.it'  
   
-**Available options:**  
--a=ALIAS	set a custom [a]lias.  
--d=DOMAIN   set a custom [d]omain.  
+**Available options:**   
 -b          execute in background.  
 -h          prints this help.  
+
+**Optional arguments:**  
+-a=ALIAS	set a custom [a]lias.  
+-d=DOMAIN   set a custom [d]omain. 
