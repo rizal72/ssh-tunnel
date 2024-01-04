@@ -23,11 +23,12 @@ function help {
   echo -e "-c         [c]custom domain to forward to. Default: '$domain'"
   echo
   echo -e $G"Available options:"$D
-  echo -e "-a=ALIAS   set a custom [a]lias "
-  echo -e "-d=DOMAIN  set a custom [d]omain "
   echo -e "-b         execute in background"
   echo -e "-h         prints this help"
   echo
+  echo -e $G"Optional arguments:"$D
+  echo -e "-a=ALIAS   set a custom [a]lias "
+  echo -e "-d=DOMAIN  set a custom [d]omain "
 }
 
 while getopts 'sa:gcd:fh' opt; do
@@ -51,7 +52,7 @@ done
 shift "$(($OPTIND -1))"
 
 if [[ $mode == 0 ]]; then
-	echo -e "${R}mode not set${D} - please specify ${G}-s${D} or ${G}-g${D} argument\n"
+	echo -e "${R}mode not set${D} - please specify ${G}-s${D}, ${G}-g${D} or ${G}-c${D} argument\n"
 	help && exit 1
 elif [[ $mode == 1 ]]; then
 	echo -e "Forwarding port ${G}22${D} from serveo.net, with alias ${G}$alias${D}\nTo connect use: ${B}ssh -J serveo.net riccardosallusti@$alias$D\nif option ${B}-b${D} is used, you can kill the process with: ${G}pkill autossh${D}"
