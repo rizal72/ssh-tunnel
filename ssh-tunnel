@@ -56,12 +56,18 @@ if [[ $mode == 0 ]]; then
 	echo -e "${R}mode not set${D} - please specify ${G}-s${D}, ${G}-g${D} or ${G}-c${D} argument\n"
 	help && exit 1
 elif [[ $mode == 1 ]]; then
-	echo -e "Forwarding port ${G}22${D} from serveo.net, with alias ${G}$alias${D}\nTo connect use: ${B}ssh -J serveo.net <userName>@$alias$D\nif option ${B}-b${D} is used, you can kill the process with: ${G}pkill autossh${D}"
-	/usr/local/bin/autossh $bg -M 0 -o "ServerAliveInterval 30" -o "ServerAliveCountMax 3" -R $alias:22:localhost:22 serveo.net
+  if [[ $bg == '-f' ]]; then
+	  echo -e "Forwarding port ${G}22${D} from serveo.net, with alias ${G}$alias${D}\nTo connect use: ${B}ssh -J serveo.net user@$alias$D\nif option ${B}-b${D} is used, you can kill the process with: ${G}pkill autossh${D}"
+	fi
+  /usr/local/bin/autossh $bg -M 0 -o "ServerAliveInterval 30" -o "ServerAliveCountMax 3" -R $alias:22:localhost:22 serveo.net
 elif [[ $mode == 2 ]]; then
-	echo -e "Forwarding port ${G}22${D} from serveo.net:1972\nTo connect use: ${B}ssh -p 1972 <userName>@serveo.net${D}\nif option ${B}-b${D} is used, you can kill the process with: ${G}pkill autossh${D}"
-	/usr/local/bin/autossh $bg -M 0 -o "ServerAliveInterval 30" -o "ServerAliveCountMax 3" -R 1972:localhost:22 serveo.net
+	if [[ $bg == '-f' ]]; then
+    echo -e "Forwarding port ${G}22${D} from serveo.net:1972\nTo connect use: ${B}ssh -p 1972 user@serveo.net${D}\nif option ${B}-b${D} is used, you can kill the process with: ${G}pkill autossh${D}"
+	fi
+  /usr/local/bin/autossh $bg -M 0 -o "ServerAliveInterval 30" -o "ServerAliveCountMax 3" -R 1972:localhost:22 serveo.net
 elif [[ $mode == 3 ]]; then
-	echo -e "Forwarding port ${G}22${D} from serveo.net, to ${G}$domain${D}\nTo connect use: ${B}ssh -J serveo.net <userName>@$domain$D\nif option ${B}-b${D} is used, you can kill the process with: ${G}pkill autossh${D}"
-	/usr/local/bin/autossh $bg -M 0 -o "ServerAliveInterval 30" -o "ServerAliveCountMax 3" -R $domain:22:localhost:22 serveo.net
+	if [[ $bg == '-f' ]]; then
+    echo -e "Forwarding port ${G}22${D} from serveo.net, to ${G}$domain${D}\nTo connect use: ${B}ssh -J serveo.net user@$domain$D\nif option ${B}-b${D} is used, you can kill the process with: ${G}pkill autossh${D}"
+	fi
+  /usr/local/bin/autossh $bg -M 0 -o "ServerAliveInterval 30" -o "ServerAliveCountMax 3" -R $domain:22:localhost:22 serveo.net
 fi
