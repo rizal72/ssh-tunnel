@@ -7,18 +7,19 @@ G='\033[0;32m'  # green
 Y='\033[0;33m'  # yellow
 B='\033[0;4m'  # blue
 
-alias='rizal72'
-domain='ssh.riccardosallusti.it'
+alias='myAlias'
+domain='ssh.myCustomDomain.com'
 bg=''
 mode=0
 
 function help {
   echo -e "${G}ssh-tunnel${D} - Forward port 22 from serveo.net for remote access:"
-  echo -e "uses autossh, ssh -R option and serveo.net online service."
-  echo -e "${B}Usage:${D} ssh-tunnel -s/-g/-c [-b]"
+  echo -e "implements autossh, ssh -R option and serveo.net free online service,"
+  echo -e "to get a reliable and consistent SSH Tunnel."
+  echo -e "${B}Usage:${D} ssh-tunnel -s[-a=ALIAS] / -g / -c[-d=DOMAIN] [-b]"
   echo
   echo -e $G"Modes:"$D
-  echo -e "-s         [s]tandard port 22 SSH tunnel, with alias: rizal72"
+  echo -e "-s         [s]tandard port 22 SSH tunnel, with alias: '$alias'"
   echo -e "-g         [g]eneric TCP tunnel, uses port 1972"
   echo -e "-c         [c]custom domain to forward to. Default: '$domain'"
   echo
@@ -31,7 +32,7 @@ function help {
   echo -e "-d=DOMAIN  set a custom [d]omain "
 }
 
-while getopts 'sa:gcd:fh' opt; do
+while getopts 'sa:gcd:bh' opt; do
   case "$opt" in
     s) mode=1
     ;;
@@ -55,12 +56,12 @@ if [[ $mode == 0 ]]; then
 	echo -e "${R}mode not set${D} - please specify ${G}-s${D}, ${G}-g${D} or ${G}-c${D} argument\n"
 	help && exit 1
 elif [[ $mode == 1 ]]; then
-	echo -e "Forwarding port ${G}22${D} from serveo.net, with alias ${G}$alias${D}\nTo connect use: ${B}ssh -J serveo.net riccardosallusti@$alias$D\nif option ${B}-b${D} is used, you can kill the process with: ${G}pkill autossh${D}"
+	echo -e "Forwarding port ${G}22${D} from serveo.net, with alias ${G}$alias${D}\nTo connect use: ${B}ssh -J serveo.net <userName>@$alias$D\nif option ${B}-b${D} is used, you can kill the process with: ${G}pkill autossh${D}"
 	/usr/local/bin/autossh $bg -M 0 -o "ServerAliveInterval 30" -o "ServerAliveCountMax 3" -R $alias:22:localhost:22 serveo.net
 elif [[ $mode == 2 ]]; then
-	echo -e "Forwarding port ${G}22${D} from serveo.net:1972\nTo connect use: ${B}ssh -p 1972 riccardosallusti@serveo.net${D}\nif option ${B}-b${D} is used, you can this process it with: ${G}pkill autossh${D}"
+	echo -e "Forwarding port ${G}22${D} from serveo.net:1972\nTo connect use: ${B}ssh -p 1972 <userName>@serveo.net${D}\nif option ${B}-b${D} is used, you can kill the process with: ${G}pkill autossh${D}"
 	/usr/local/bin/autossh $bg -M 0 -o "ServerAliveInterval 30" -o "ServerAliveCountMax 3" -R 1972:localhost:22 serveo.net
 elif [[ $mode == 3 ]]; then
-	echo -e "Forwarding port ${G}22${D} from serveo.net, to ${G}$domain${D}\nTo connect use: ${B}ssh -J serveo.net riccardosallusti@$domain$D\nif option ${B}-b${D} is used, you can kill the process with: ${G}pkill autossh${D}"
+	echo -e "Forwarding port ${G}22${D} from serveo.net, to ${G}$domain${D}\nTo connect use: ${B}ssh -J serveo.net <userName>@$domain$D\nif option ${B}-b${D} is used, you can kill the process with: ${G}pkill autossh${D}"
 	/usr/local/bin/autossh $bg -M 0 -o "ServerAliveInterval 30" -o "ServerAliveCountMax 3" -R $domain:22:localhost:22 serveo.net
 fi

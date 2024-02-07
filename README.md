@@ -1,12 +1,13 @@
 # ssh-tunnel
 Forwards port 22 from serveo.net for remote access:  
-uses _autossh_, _ssh -R_ option and [serveo.net](https://serveo.net) online service.  
-_Usage:_ ssh-tunnel -s/-g/-c [-b]. 
+implements _autossh_, _ssh -R_ option and [serveo.net](https://serveo.net) free online service,  
+to get a reliable and consistent SSH Tunnel.
+_Usage:_ ssh-tunnel -s[-a=ALIAS] / -g / -c[-d=DOMAIN] [-b]. 
   
 **Modes:**  
--s    [s]tandard port 22 SSH tunnel, with alias: rizal72.  
+-s    [s]tandard port 22 SSH tunnel, with alias: myAlias.  
 -g    [g]eneric TCP tunnel, use port 1972.  
--c    [c]custom domain to forward to. Default: 'ssh.riccardosallusti.it'  
+-c    [c]custom domain to forward to. Default: 'ssh.myCustomDomain.com'  
   
 **Available options:**   
 -b          execute in background.  
