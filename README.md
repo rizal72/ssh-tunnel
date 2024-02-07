@@ -1,7 +1,7 @@
 # ssh-tunnel
 Forwards port 22 from serveo.net for remote access:  
 implements _autossh_, _ssh -R_ option and [serveo.net](https://serveo.net) free online service,  
-to get a reliable and consistent SSH Tunnel.
+to get a reliable and consistent SSH Tunnel.  
 _Usage:_ ssh-tunnel -s[-a=ALIAS] / -g / -c[-d=DOMAIN] [-b]. 
   
 **Modes:**  
